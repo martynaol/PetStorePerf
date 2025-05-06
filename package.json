@@ -1,0 +1,16 @@
+{
+  "name": "PetStorePerf",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:martynaol/PetStorePerf.git",
+  "author": "martynaol",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/k6": "^1.0.2",
+    "typescript": "^5.8.2"
+  },
+  "scripts": {
+    "test:api": "docker run --rm -v /Users/martyna.olesinska/Documents/private/PetStorePerf:/app -i grafana/k6 run /app/tests/api/register.js",
+    "test:html": "k6 run --out html=output.html build/test.js"
+  }
+}
