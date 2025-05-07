@@ -7,7 +7,7 @@ export const options = {
   iterations: 5,
 };
 
-export default function healthCheck() {
+function healthCheck() {
   const res = http.get("https://petstore.octoperf.com/");
   check(res, {
     "is status 200": (r) => r.status === 200,
@@ -17,7 +17,7 @@ export default function healthCheck() {
   sleep(1);
 }
 
-export default function register() {
+function register() {
   const url = "https://petstore.octoperf.com/actions/Account.action";
   const [username, email] = generateRandomEmailAndUsername();
   const payload = {
@@ -38,4 +38,7 @@ export default function register() {
   });
 
   sleep(3);
+}
+export default function () {
+  healthCheck(), register();
 }

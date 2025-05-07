@@ -10,7 +10,11 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "test:api": "docker run --rm -v /Users/martyna.olesinska/Documents/private/PetStorePerf:/app -i grafana/k6 run /app/tests/api/register.js",
+    "test:api": "docker run --rm -v $(pwd):/app -i grafana/k6 run /app/tests/api/register.js",
+    "api:cloud": "docker run --rm -v $(pwd):/app -i grafana/k6 run -o cloud /app/tests/api/register.js",
     "test:html": "k6 run --out html=output.html build/test.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
   }
 }
