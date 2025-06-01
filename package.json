@@ -11,7 +11,9 @@
   },
   "scripts": {
     "test:api": "docker run --rm -v $(pwd):/app -i grafana/k6 run /app/tests/api/register.js",
-    "api:cloud": "docker run --rm -v $(pwd):/app -i grafana/k6 run -o cloud /app/tests/api/register.js",
+    "api:cloud": "docker run --rm --env-file .env -v $(pwd):/app -i grafana/k6 run --verbose -o cloud /app/tests/api/register.js",
+    "test:ui": "docker run --rm -i -v $(pwd):/app grafana/k6:master-with-browser run /app/tests/ui/homepage.js",
+    "test:ui:headless": "docker run --rm -i -v $(pwd):/app -w /app -e grafana/k6:master-with-browser run /app/tests/ui/login.js",
     "test:html": "k6 run --out html=output.html build/test.js"
   },
   "dependencies": {

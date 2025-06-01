@@ -21,7 +21,8 @@ export default async function () {
   const page = await browser.newPage();
 
   const loginPage = new LoginPage(page);
-  await loginPage.goTo();
+  
+  await loginPage.goto();
   await loginPage.login("auto_test", "zaq123WSX!@#");
 
   await page.close();

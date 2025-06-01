@@ -1,14 +1,14 @@
-import { BasePage } from "./base.page";
-
-export class LoginPage extends BasePage {
+export class LoginPage {
   constructor(page) {
-    super(page, "/actions/Account.action?signonForm=");
-
+    this.page = page;
     this.usernameInput = page.locator("input[name='username']");
     this.passwordInput = page.locator("input[name='password']");
     this.loginButton = page.locator("input[type='signon']");
   }
-
+  
+  async goto() {
+    await this.page.goto('https://petstore.octoperf.com/actions/Account.action?signonForm=');
+  }
   async login(username, password) {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
