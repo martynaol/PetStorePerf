@@ -1,13 +1,14 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
-import generateRandomEmailAndUsername from "../../utils/data.generator.utils.js";
+import { Options } from "k6/options";
+import generateRandomEmailAndUsername from "../../utils/data.generator.utils";
 
-export const options = {
+export const options: Options = {
   vus: 2,
   iterations: 5,
 };
 
-function healthCheck() {
+function healthCheck(): void {
   const res = http.get("https://petstore.octoperf.com/");
   check(res, {
     "is status 200": (r) => r.status === 200,
@@ -17,17 +18,18 @@ function healthCheck() {
   sleep(1);
 }
 
-function register() {
+function register(): void {
   const url = "https://petstore.octoperf.com/actions/Account.action";
   const [username, email] = generateRandomEmailAndUsername();
-  const payload = {
+
+  const payload: Record<string, string> = {
     username,
     password: "P@ssword1",
     repeatedPassword: "P@ssword1",
     "account.email": email,
   };
 
-  const headers = {
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
 
@@ -39,6 +41,8 @@ function register() {
 
   sleep(3);
 }
-export default function () {
-  healthCheck(), register();
+
+export default function (): void {
+  healthCheck();
+  register();
 }

@@ -10,11 +10,12 @@
     "typescript": "^5.8.2"
   },
   "scripts": {
-    "test:api": "docker run --rm -v $(pwd):/app -i grafana/k6 run /app/tests/api/register.js",
-    "api:cloud": "docker run --rm --env-file .env -v $(pwd):/app -i grafana/k6 run --verbose -o cloud /app/tests/api/register.js",
-    "test:ui": "docker run --rm -i -v $(pwd):/app grafana/k6:master-with-browser run /app/tests/ui/homepage.js",
-    "test:ui:headless": "docker run --rm -i -v $(pwd):/app -w /app -e grafana/k6:master-with-browser run /app/tests/ui/login.js",
-    "test:html": "k6 run --out html=output.html build/test.js"
+    "compile": "tsc",
+    "test:api": "npm run compile && docker run --rm -v $(pwd):/app -w /app -i grafana/k6 run ./dist/tests/api/register.js",
+    "api:cloud": "npm run compile && docker run --rm --env-file .env -v $(pwd):/app -w /app -i grafana/k6 run --verbose -o cloud ./dist/tests/api/register.js",
+    "test:ui": "npm run compile && docker run --rm -i -v $(pwd):/app -w /app grafana/k6:master-with-browser run ./dist/tests/ui/homepage.js",
+    "test:ui:headless": "npm run compile && docker run --rm -i -v $(pwd):/app -w /app grafana/k6:master-with-browser run ./dist/tests/ui/login.js",
+    "test:html": "npm run compile && k6 run --out html=output.html dist/test.js"
   },
   "dependencies": {
     "dotenv": "^16.5.0"

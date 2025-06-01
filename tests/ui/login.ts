@@ -1,7 +1,8 @@
 import { browser } from "k6/browser";
-import { LoginPage } from "../../pages/login.page.js";
+import { Options } from "k6/options";
+import { LoginPage } from "../../pages/login.page";
 
-export const options = {
+export const options: Options = {
   scenarios: {
     ui: {
       executor: "shared-iterations",
@@ -17,11 +18,11 @@ export const options = {
   },
 };
 
-export default async function () {
+export default async function (): Promise<void> {
   const page = await browser.newPage();
 
   const loginPage = new LoginPage(page);
-  
+
   await loginPage.goto();
   await loginPage.login("auto_test", "zaq123WSX!@#");
 
